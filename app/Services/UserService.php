@@ -20,5 +20,14 @@ class UserService
         return $this->userRepository->all(['*'],['articles','articles.tags']);
     }
 
+    public function findById($id)
+    {
+        return $this->userRepository->findById($id,['*'],['articles','articles.tags']);
+    }
+
+    public function create($request)
+    {
+        return $this->userRepository->create($request);
+    }
 
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\CommonHelper;
 use App\Http\Validators\AuthValidator;
-use App\Repositories\UserRepositoryInterface;
+use App\Services\UserService;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,10 +15,10 @@ class AuthController extends Controller
 {
 
     private $authValidator;
-    private $userRepository;
+    private $userService;
 
-    public function __construct(Request $request , UserRepositoryInterface $userRepository){
-        $this->userRepository = $userRepository;
+    public function __construct(Request $request , UserService $userService){
+        $this->userService = $userService;
         $CommonHelper = new CommonHelper();
         $actionName = $CommonHelper->getRouteActionName();
         $actoinNameForValidation = ['register' , 'login'];
@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = $this->userRepository->create($input);
+        $user = $this->userService->create($input);
 
         $success['token'] = $user->createToken('Access-Token')->accessToken;
         $success['name'] = $user->name;

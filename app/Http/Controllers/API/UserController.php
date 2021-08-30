@@ -23,27 +23,10 @@ class UserController extends Controller
     }
 
     
-    public function create()
-    {
-        
-    }
-
-    public function store(Request $request)
-    {
-      
-    }
-
-    
     public function show(User $user)
     {
-        $data = $this->userService->findById($user->id,['*'],['articles.tags'],[]);
+        $data = $this->userService->findById($user->id);
         return $this->sendResponse($data , __('common.action_performed' , ['model' => 'User' , 'action' => 'fetched']));
-    }
-
-   
-    public function edit(User $user)
-    {
-        
     }
 
    

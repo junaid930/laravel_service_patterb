@@ -6,19 +6,18 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\CommonHelper;
 use App\Http\Validators\ArticleValidator;
-use App\Repositories\ArticleRepositoryInterface;
+use App\Services\ArticleService;
 use App\Models\Article;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Else_;
 
 class ArticleController extends Controller
 {
     
     private $articleValidator;
-    private $articleRepository;
+    private $articleService;
 
-    public function __construct(Request $request , ArticleRepositoryInterface $articleRepository){
-        $this->articleRepository = $articleRepository;
+    public function __construct(Request $request , ArticleService $articleService){
+        $this->articleService = $articleService;
         $CommonHelper = new CommonHelper();
         $actionName = $CommonHelper->getRouteActionName();
         $actoinNameForValidation = ['store' , 'update'];
@@ -27,41 +26,30 @@ class ArticleController extends Controller
         }
     }
 
+
     public function index()
     {
-        //
-    }
-
-   
-    public function create()
-    {
-        // 
+        $data = $this->articleService->getAll();
+        return $this->sendResponse($data , __('common.action_performed' , ['model' => 'Articles' , 'action' => 'fetched']));
     }
 
     
     public function store(Request $request)
     {
         $validator = $this->articleValidator->validate();
-
         if($validator->fails()){
             return $this->sendError(__('common.validation_failed') , $validator->errors());
         }
-        
-        $article = $this->articleRepository->create($request->all());
+
+        $article = $this->articleService->create($request->all());
         return $this->sendResponse($article, __('common.action_performed' , ['model' => 'Article' , 'action' => 'created']));
     }
 
     
     public function show(Article $article)
     {
-        $data = $this->articleRepository->findById($article->id,['*'],['tags'],[]);
+        $data = $this->articleService->findById($article->id);
         return $this->sendResponse($data , __('common.action_performed' , ['model' => 'Article' , 'action' => 'fetched']));
-    }
-
-   
-    public function edit(Article $article)
-    {
-        //
     }
 
    
@@ -73,8 +61,6 @@ class ArticleController extends Controller
     
     public function destroy(Article $article)
     {
-        $deletedArticle = $this->articleRepository->deleteById($article->id);
-        return $this->sendResponse($deletedArticle , __('common.action_performed' , ['model' => 'Article' , 'action' => 'deleted']));
-
+        // 
     }
 }
