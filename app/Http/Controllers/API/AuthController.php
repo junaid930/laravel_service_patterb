@@ -62,7 +62,7 @@ class AuthController extends Controller
 
             return $this->sendResponse($success , __('common.action_performed' , ['model' => 'User' , 'action' => 'login']));
         }
-        return $this->sendError('Unaothorized' , ['error' => __('auth.failed')]);
+        return $this->sendError('Unauthorized' , ['error' => __('auth.failed')]);
     }
 
 

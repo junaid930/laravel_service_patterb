@@ -18,12 +18,6 @@ class TagValidator
     function __construct($request , $action){
         $this->input = $request->all();
         $this->rules = $this->validations[$action];
-
-        if(!count($this->input)){
-            foreach ($this->rules as $key => $value) {
-                $this->input[$key] = '';
-            }
-        }
         
     }
 
