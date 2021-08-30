@@ -9,6 +9,7 @@ use App\Http\Validators\ArticleValidator;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Else_;
 
 class ArticleController extends Controller
 {
@@ -41,9 +42,11 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $validator = $this->articleValidator->validate();
+
         if($validator->fails()){
             return $this->sendError(__('common.validation_failed') , $validator->errors());
         }
+        
         $article = $this->articleRepository->create($request->all());
         return $this->sendResponse($article, __('common.action_performed' , ['model' => 'Article' , 'action' => 'created']));
     }

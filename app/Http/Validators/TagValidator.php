@@ -21,10 +21,7 @@ class TagValidator
 
         if(!count($this->input)){
             foreach ($this->rules as $key => $value) {
-                \Log::debug($key);
                 $this->input[$key] = '';
-                \Log::debug($this->input);
-
             }
         }
         
