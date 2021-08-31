@@ -96,6 +96,30 @@ class BaseRepository implements EloquentRepositoryInterface
     }
 
     /**
+     * Create a modelWithRelation.
+     *
+     * @param array $payload
+     * @return Model
+     */
+    public function createWithRelation(Model $relationModel,string $relationName,array $payload): ?Model
+    {
+        $model = $relationModel->$relationName()->create($payload);
+        return $model->fresh();
+    }
+  
+        /**
+     * Attach relations with Model.
+     *
+     * @param array $payload
+     * @return Model
+     */
+    public function attachRelationWithModel(Model $relationModel,string $relationName,array $payload): ?Model
+    {
+      $model = $relationModel->$relationName()->attach($payload);
+      return $relationModel->fresh(); 
+    }
+
+    /**
      * Update existing model.
      *
      * @param int $modelId

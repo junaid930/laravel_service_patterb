@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Repositories\Eloquent\BaseRepository;
 
-use Auth;
+
 
 class ArticleRepository extends BaseRepository implements ArticleRepositoryInterface
 {
@@ -28,11 +28,5 @@ class ArticleRepository extends BaseRepository implements ArticleRepositoryInter
     }
 
 
-    public function create(array $payload): ?Model
-    {
-        $article = Auth::user()->articles()->create($payload);
-        $article->tags()->attach($payload['tags']);
-        return $article->fresh();
-    }
 
 }

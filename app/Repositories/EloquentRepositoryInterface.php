@@ -63,6 +63,25 @@ interface EloquentRepositoryInterface
      */
     public function create(array $payload): ?Model;
 
+        /**
+     * Create a model with relations.
+     *
+     * @param array $payload
+     * @return Model
+     */
+    public function createWithRelation(Model $relationModel,string $relationName,array $payload): ?Model;
+
+
+
+        /**
+     * Attach relations with Models.
+     *
+     * @param array $payload
+     * @return Model
+     */
+    public function attachRelationWithModel(Model $relationModel,string $relationName,array $payload): ?Model;
+
+
     /**
      * Update existing model.
      *

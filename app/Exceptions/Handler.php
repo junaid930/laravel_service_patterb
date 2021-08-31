@@ -42,7 +42,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception) 
     {
         if ($request->expectsJson()) {
-            return $this->sendError(__('auth.unauthorized'),'',401);
+            return $this->sendError(__('auth.unauthorized'),401);
         }
     }
 
@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
             if($e->getPrevious() instanceof ModelNotFoundException){    
                 $message =  __('common.not_found' , ['resouce' => $e->getPrevious()->getModel()]);
             }
-            return $this->sendError($message,'',404);
+            return $this->sendError($message,404);
         });
     }
 }

@@ -3,27 +3,23 @@
 namespace App\Http\Traits;
 
 trait Response {
-    public function sendResponse($result, $message)
-    {
+    public function sendResponse($message,$code = 200,$data = null)
+    { 
     	$response = [
             'success' => true,
-            'data'    => $result,
             'message' => $message,
+            'data'    => $data,
         ];
-        return response()->json($response, 200);
+        return response()->json($response, $code);
     }  
 
-    public function sendError($error , $errorMessages = [] , $code = 400 )
+    public function sendError($message, $code = 400 , $data = null)
     {
         $response = [
             'success' => false,
-            'message' => $error
+            'message' => $message,
+            'data'    => $data
         ];
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
-        }
-
         return response()->json($response, $code);
 
     }

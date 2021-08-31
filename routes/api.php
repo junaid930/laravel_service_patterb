@@ -19,13 +19,15 @@ use App\Http\Controllers\API\TagController;
 |
 */
 
-Route::post('/auth/register' ,[AuthController::class , 'register']);
-Route::post('/auth/login' ,[AuthController::class , 'login'])->name('login');
-
+Route::post('auth/register' ,[AuthController::class , 'register']);
+Route::post('auth/login' ,[AuthController::class , 'login'])->name('login');
+Route::post('auth/forgot', [AuthController::class , 'forgot']);
+Route::post('auth/reset', [AuthController::class, 'reset']);
 
 
 Route::middleware('auth:api')->group( function () {
     Route::resource('users', UserController::class);
+    Route::get('auth/me', [AuthController::class , 'profile']);
     Route::resource('articles', ArticleController::class);
     Route::resource('tags', TagController::class);
 });

@@ -39,11 +39,11 @@ class TagController extends Controller
     {
         $validator = $this->tagValidator->validate();
         if($validator->fails()){
-            return $this->sendError(__('common.validation_failed') , $validator->errors());
+            return $this->sendError(__('common.validation_failed') ,400 ,$validator->errors());
         }
 
         $tag = $this->tagService->create($request->all());
-        return $this->sendResponse($tag , __('common.action_performed' , ['model' => 'Tag' , 'action' => 'created']));
+        return $this->sendResponse(__('common.action_performed' , ['model' => 'Tag' , 'action' => 'created']),201,$tag);
     }
 
 

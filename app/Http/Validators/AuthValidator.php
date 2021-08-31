@@ -16,7 +16,17 @@ class AuthValidator
         'login' => [
             'email' => 'required|email',
             'password' => 'required',
-        ]
+        ],
+        'forgot' => [
+            'email' => 'required|email',
+        ],
+        'reset' => [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'c_password' => 'required|same:password'
+        ],
+        
     ];
 
     private $input;
